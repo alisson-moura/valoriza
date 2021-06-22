@@ -1,4 +1,5 @@
 import { getCustomRepository } from 'typeorm'
+import { AppError } from '../../AppError'
 import { UsersRepository } from '../../repositories/UsersRepository'
 import { I_User } from './UserDTO'
 
@@ -8,7 +9,7 @@ class CreateUserService {
 
     const userAlreadyExists = await usersRepository.findOne({ email })
     if (userAlreadyExists) {
-      throw new Error("User already exists")
+      throw new AppError("User already exists", 409)
     }
 
     const user = usersRepository.create({
