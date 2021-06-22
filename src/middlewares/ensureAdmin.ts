@@ -4,7 +4,7 @@ export function ensureAdmin(request: Request, response: Response, next: NextFunc
   // verificar se o usuário é admin
   let admin = true
   if (admin) {
-    return next
+    return next()
   }
 
   return response.status(401).json({ error: 'Unauthorized' });
