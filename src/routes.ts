@@ -1,6 +1,7 @@
 import { Router } from 'express'
 import TagsController from './controllers/TagsController'
 import UsersController from './controllers/UsersController'
+import { ensureAdmin } from './middlewares/ensureAdmin'
 
 const router = Router()
 
@@ -11,6 +12,6 @@ const tagsController = new TagsController()
 router.post('/users', usersController.store)
 
 // tags routes
-router.post('/tags', tagsController.store)
+router.post('/tags', ensureAdmin, tagsController.store)
 
 export { router }
