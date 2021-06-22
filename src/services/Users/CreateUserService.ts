@@ -1,10 +1,10 @@
 import { getCustomRepository } from 'typeorm'
 import { AppError } from '../../AppError'
 import { UsersRepository } from '../../repositories/UsersRepository'
-import { I_User } from './UserDTO'
+import { I_UserDTO } from './UserDTO'
 
 class CreateUserService {
-  async execute({ email, name, password, admin }: I_User) {
+  async execute({ email, name, password, admin }: I_UserDTO) {
     const usersRepository = getCustomRepository(UsersRepository)
 
     const userAlreadyExists = await usersRepository.findOne({ email })
