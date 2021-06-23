@@ -1,5 +1,6 @@
 import { getCustomRepository } from 'typeorm'
-import { AppError } from '../../AppError'
+import { ErrorProvider } from '../../providers/ErrorProvider'
+import { EncryptProvider } from '../../providers/EncryptionProvider'
 import { UsersRepository } from '../../repositories/UsersRepository'
 import { I_UserDTO } from './UserDTO'
 
@@ -9,16 +10,20 @@ class CreateUserService {
 
     const userAlreadyExists = await usersRepository.findOne({ email })
     if (userAlreadyExists) {
-      throw new AppError("User already exists", 409)
+      throw new ErrorProvider("User already exists", 409)
     }
+
+    const encryptionProvider = new EncryptProvider()
+    const passwordEncrypted = await encryptionProvider.encrypt(password)
 
     const user = usersRepository.create({
       name,
-      password,
+      password: passwordEncrypted,
       email,
       admin: admin == undefined ? false : admin
     })
     await usersRepository.save(user)
+
     return user
   }
 }

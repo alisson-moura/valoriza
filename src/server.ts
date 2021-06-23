@@ -3,14 +3,14 @@ import 'express-async-errors'
 
 import { router } from './routes'
 import './database'
-import { AppError } from './AppError'
+import { ErrorProvider } from './providers/ErrorProvider'
 
 const app = express()
 app.use(express.json())
 app.use(router)
 
 app.use((err: Error, request: Request, response: Response, next: NextFunction) => {
-  if (err instanceof AppError) {
+  if (err instanceof ErrorProvider) {
     return response.status(err.statusCode).json({ error: err.message })
   }
   return response.status(500).json({ error: 'Internal Server Error.' })
