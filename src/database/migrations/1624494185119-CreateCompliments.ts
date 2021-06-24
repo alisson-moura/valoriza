@@ -39,8 +39,8 @@ export class CreateCompliments1624494185119 implements MigrationInterface {
                     referencedTableName: 'users',
                     referencedColumnNames: ['id'],
                     columnNames: ['user_sender'],
-                    onDelete: 'CASCADE',
-                    onUpdate: 'CASCADE'
+                    onDelete: 'SET NULL',
+                    onUpdate: 'SET NULL'
                 },
                 {
                     name: 'FK_UserReceiver_Compliments',
