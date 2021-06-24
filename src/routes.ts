@@ -10,6 +10,7 @@ const tagsController = new TagsController()
 
 // users routes
 router.post('/users', usersController.store)
+router.post('/auth', usersController.authenticate)
 
 // tags routes
 router.post('/tags', ensureAdmin, tagsController.store)
