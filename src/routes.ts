@@ -5,6 +5,7 @@ import UsersController from './controllers/UsersController'
 import ComplimentsController from './controllers/ComplimentsController'
 
 import { ensureAdmin } from './middlewares/ensureAdmin'
+import { ensureAuthenticated } from './middlewares/ensureAuthenticated'
 
 const router = Router()
 
@@ -17,9 +18,13 @@ router.post('/users', usersController.store)
 router.post('/auth', usersController.authenticate)
 
 // tags routes
-router.post('/tags', ensureAdmin, tagsController.store)
+router.post('/tags', ensureAuthenticated, ensureAdmin, tagsController.store)
 
 // compliments routes
-router.post('/compliments', ensureAdmin, complimentsController.store)
+router.post('/compliments', ensureAuthenticated, complimentsController.store)
+
+router.get('/', ensureAuthenticated, (request, response) => {
+  return response.status(200).json({})
+})
 
 export { router }
