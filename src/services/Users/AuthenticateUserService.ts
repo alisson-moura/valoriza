@@ -1,7 +1,7 @@
 import { getCustomRepository } from "typeorm"
 import { EncryptionProvider } from "../../providers/EncryptionProvider"
 import { ErrorProvider } from "../../providers/ErrorProvider"
-import { TokenProvider } from "../../providers/TokenProvider"
+import { TokenProvider } from "../../providers/TokenProvider/TokenProvider"
 import { UsersRepository } from "../../repositories/UsersRepository"
 
 class AuthenticateUserService {
@@ -17,7 +17,7 @@ class AuthenticateUserService {
       throw new ErrorProvider("E-mail or password incorrect.", 400)
 
     const tokenProvider = new TokenProvider()
-    const token = tokenProvider.create(user.id, user.email)
+    const { token } = tokenProvider.create(user.id, user.email)
 
     return token
   }

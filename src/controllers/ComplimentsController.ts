@@ -3,11 +3,11 @@ import { CreateComplimentService } from "../services/Compliments/CreateComplimen
 
 class ComplimentsController {
   async store(request: Request, response: Response): Promise<Response> {
+    const { user_id: user_sender } = request
     const {
       message,
       tag_id,
-      user_receiver,
-      user_sender
+      user_receiver
     } = request.body
 
     const createComplimentService = new CreateComplimentService()
