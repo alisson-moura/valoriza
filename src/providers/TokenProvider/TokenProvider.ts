@@ -2,11 +2,16 @@ import { JwtPayload, sign, verify } from 'jsonwebtoken'
 import { I_ResponseCreate, I_ResponseVerify } from './I_TokenProvider'
 
 class TokenProvider {
+  private secret: string
+
+  constructor() {
+    this.secret = process.env.JWT_SECRET
+  }
 
   create(id: string, email: string): I_ResponseCreate {
     const token = sign({
       email: email
-    }, '41e60dee3d2e8c8b71264959456445f8b8debb24', {
+    }, this.secret, {
       expiresIn: '1d',
       subject: id
     })
@@ -18,7 +23,7 @@ class TokenProvider {
     let jwtError: string
 
     try {
-      result = verify(token, '41e60dee3d2e8c8b71264959456445f8b8debb24')
+      result = verify(token, this.secret)
     } catch (err) {
       jwtError = err.message
     }
