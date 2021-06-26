@@ -1,5 +1,5 @@
 require('dotenv').config({
-  path: process.env.NODE_ENV === "test" ? ".env.testing" : ".env"
+  path: process.env.NODE_ENV === "test" ? ".env.test" : ".env"
 })
 
 import express, { NextFunction, Response, Request, response } from 'express'
