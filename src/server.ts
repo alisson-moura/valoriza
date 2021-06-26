@@ -1,3 +1,7 @@
+require('dotenv').config({
+  path: process.env.NODE_ENV === "test" ? ".env.testing" : ".env"
+})
+
 import express, { NextFunction, Response, Request, response } from 'express'
 import 'express-async-errors'
 

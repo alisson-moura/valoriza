@@ -6,7 +6,7 @@
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
     "start:dev": "ts-node-dev ./src/server.ts",
-    "typeorm": "ts-node-dev ./node_modules/typeorm/cli.js -c"
+    "typeorm": "ts-node-dev ./node_modules/typeorm/cli.js"
   },
   "keywords": [],
   "author": "alisson-moura",
