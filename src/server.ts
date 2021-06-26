@@ -4,9 +4,9 @@ require('dotenv').config({
 
 import express, { NextFunction, Response, Request, response } from 'express'
 import 'express-async-errors'
+import './database'
 
 import { router } from './routes'
-import './database'
 import { ErrorProvider } from './providers/ErrorProvider'
 
 const app = express()
