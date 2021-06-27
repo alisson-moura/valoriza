@@ -1,5 +1,6 @@
 import { getCustomRepository } from 'typeorm'
 import { Compliment } from '../../entities/Compliment'
+import { ReceivedComplimentMail } from '../../jobs/ReceivedComplimentMail'
 import { ErrorProvider } from '../../providers/ErrorProvider'
 import { ComplimentsRepository } from '../../repositories/ComplimentsRepository'
 import { TagsRepository } from '../../repositories/TagsRepository'
@@ -34,7 +35,18 @@ class CreateComplimentService {
       tag_id
     })
 
+    const userSender = await usersRepository.findOne(user_sender)
     await complimentsRepository.save(compliment)
+
+    const receivedComplimentMail = new ReceivedComplimentMail()
+    await receivedComplimentMail.handle({
+      tagName: tag.name,
+      complimentId: compliment.id,
+      emailReceiver: userReceiver.email,
+      nameReceiver: userReceiver.name,
+      nameSender: userSender.name
+    })
+
     return compliment
   }
 }
