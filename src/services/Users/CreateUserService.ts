@@ -3,6 +3,8 @@ import { ErrorProvider } from '../../providers/ErrorProvider'
 import { EncryptionProvider } from '../../providers/EncryptionProvider'
 import { UsersRepository } from '../../repositories/UsersRepository'
 import { I_UserDTO } from './UserDTO'
+import { WelcomeMail } from '../../jobs/WelcomeMail'
+
 
 class CreateUserService {
   async execute({ email, name, password, admin = false }: I_UserDTO) {
@@ -23,6 +25,9 @@ class CreateUserService {
       admin
     })
     await usersRepository.save(user)
+
+    const welcomeMail = new WelcomeMail()
+    await welcomeMail.handle(user.name, user.email)
 
     return user
   }
