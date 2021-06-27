@@ -1,0 +1,537 @@
+{
+  "openapi": "3.0.2",
+  "info": {
+    "title": "Valoriza API",
+    "version": "1.0",
+    "description": "Uma aplicação para enviar e receber elogios.",
+    "contact": {
+      "name": "Alisson Moura",
+      "url": "https://github.com/alisson-moura",
+      "email": "alisson.mo.moura@outlook.com.br"
+    }
+  },
+  "servers": [
+    {
+      "url": "http://localhost:3000",
+      "description": "Local server"
+    }
+  ],
+  "components": {
+    "schemas": {
+      "CreateUser": {
+        "type": "object",
+        "properties": {
+          "name": {
+            "type": "string"
+          },
+          "email": {
+            "type": "string"
+          },
+          "password": {
+            "type": "string"
+          }
+        },
+        "example": {
+          "name": "John Doe",
+          "email": "john.doe@mail.com",
+          "password": "securePassword@123"
+        }
+      },
+      "Auth": {
+        "type": "object",
+        "properties": {
+          "email": {
+            "type": "string"
+          },
+          "password": {
+            "type": "string"
+          }
+        },
+        "example": {
+          "email": "john.doe@mail.com",
+          "password": "securePassword@123"
+        }
+      },
+      "User": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "string"
+          },
+          "name": {
+            "type": "string"
+          },
+          "email": {
+            "type": "string"
+          },
+          "isAdmin": {
+            "type": "boolean"
+          }
+        },
+        "example": {
+          "id": "837e051d-0977-4c00-a199-12cb6e40892e",
+          "name": "John Doe",
+          "email": "john.doe@mail.com",
+          "isAdmin": false
+        }
+      },
+      "CreateTag": {
+        "type": "object",
+        "properties": {
+          "name": {
+            "type": "string"
+          },
+          "description": {
+            "type": "string"
+          }
+        },
+        "example": {
+          "name": "Leadership",
+          "description": "The employee is a great leader."
+        }
+      },
+      "Tag": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "string"
+          },
+          "name": {
+            "type": "string"
+          },
+          "description": {
+            "type": "string"
+          }
+        },
+        "example": {
+          "id": "837e051d-0977-4c00-a199-12cb6e40892e",
+          "name": "Leadership",
+          "description": "The employee is a great leader."
+        }
+      },
+      "CreateCompliment": {
+        "type": "object",
+        "properties": {
+          "user_receiver": {
+            "type": "string"
+          },
+          "tag_id": {
+            "type": "string"
+          },
+          "message": {
+            "type": "string"
+          }
+        },
+        "example": {
+          "user_receiver": "837e051d-0977-4c00-a199-12cb6e40892e",
+          "tag_id": "837e051d-0977-4c00-a199-12cb6e40892e",
+          "message": "The employee is a great leader."
+        }
+      },
+      "Compliment": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "string"
+          },
+          "user_receiver": {
+            "type": "string"
+          },
+          "user_sender": {
+            "type": "string"
+          },
+          "tag_id": {
+            "type": "string"
+          },
+          "message": {
+            "type": "string"
+          }
+        },
+        "example": {
+          "id": "837e051d-0977-4c00-a199-12cb6e40892e",
+          "user_receiver": "837e051d-0977-4c00-a199-12cb6e40892e",
+          "user_sender": "837e051d-0977-4c00-a199-12cb6e40892e",
+          "tag_id": "837e051d-0977-4c00-a199-12cb6e40892e",
+          "message": "The employee is a great leader."
+        }
+      },
+      "ComplimentDetail": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "string"
+          },
+          "user_receiver": {
+            "type": "string"
+          },
+          "tag_id": {
+            "type": "string"
+          },
+          "message": {
+            "type": "string"
+          },
+          "userSender": {
+            "type": "object"
+          },
+          "userReceiver": {
+            "type": "object"
+          },
+          "tag": {
+            "type": "object"
+          }
+        },
+        "example": {
+          "id": "837e051d-0977-4c00-a199-12cb6e40892e",
+          "user_receiver": "837e051d-0977-4c00-a199-12cb6e40892e",
+          "tag_id": "837e051d-0977-4c00-a199-12cb6e40892e",
+          "message": "The employee is a great leader.",
+          "userSender": {
+            "id": "76983d54-e47c-426a-acf3-8a2c6bbaa551",
+            "name": "John Doe",
+            "email": "john.doe@mail.com"
+          },
+          "userReceiver": {
+            "id": "76983d54-e47c-426a-acf3-8a2c6bbaa551",
+            "name": "Jow Doe",
+            "email": "jow.doe@mail.com"
+          },
+          "tag": {
+            "id": "44e35196-98fc-4abe-8bb3-f36a11c82bb9",
+            "name": "Liderança",
+            "description": "O colaborador(a) consegue criar soluções inovadoras"
+          }
+        }
+      }
+    }
+  },
+  "paths": {
+    "/auth": {
+      "post": {
+        "tags": [
+          "Authentication"
+        ],
+        "summary": "Authentication of a user",
+        "description": "Authentication of a user using JWT",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/Auth"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Success",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "token": {
+                      "type": "string"
+                    }
+                  },
+                  "example": {
+                    "token": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6ImFsaXNzb24ubW8ubW91cmFAb3V0bG9vay5jb20uYnIiLCJpYXQiOjE2MjQ3NTkzODIsImV4cCI6MTYyNDg0NTc4Miwic3ViIjoiNjQ4MjdkY2EtMGRjMC00YzM4LTljNjctYTExNTRjMWJjMmZmIn0.j_xqmt89hsWVl3EMpTvOOvfITWLejO76TOdIEb7lbK8"
+                  }
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Bad request."
+          }
+        }
+      }
+    },
+    "/users": {
+      "post": {
+        "tags": [
+          "Users"
+        ],
+        "summary": "Create a new user",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/CreateUser"
+              }
+            }
+          }
+        },
+        "responses": {
+          "201": {
+            "description": "Created"
+          },
+          "400": {
+            "description": "Bad request"
+          },
+          "409": {
+            "description": "User already exists"
+          }
+        }
+      },
+      "get": {
+        "tags": [
+          "Authenticated routes"
+        ],
+        "summary": "List all users",
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ],
+        "parameters": [
+          {
+            "name": "name",
+            "description": "Name of user",
+            "in": "query",
+            "schema": {
+              "type": "string",
+              "default": ""
+            },
+            "required": false
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Success",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "properties": {
+                    "users": {
+                      "type": "array",
+                      "items": {
+                        "$ref": "#/components/schemas/User"
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/users/{id}": {
+      "get": {
+        "tags": [
+          "Authenticated routes"
+        ],
+        "summary": "Show user details",
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ],
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "description": "id of user",
+            "schema": {
+              "type": "string"
+            },
+            "required": true
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Success",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/User"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "User not found"
+          }
+        }
+      }
+    },
+    "/tags": {
+      "post": {
+        "tags": [
+          "Authenticated routes"
+        ],
+        "summary": "Create a new tag",
+        "description": "Only admins can create new tags",
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/CreateTag"
+              }
+            }
+          }
+        },
+        "responses": {
+          "201": {
+            "description": "Created",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Tag"
+                }
+              }
+            }
+          },
+          "409": {
+            "description": "Conflict - Already exist tag with same name"
+          },
+          "403": {
+            "description": "User is not admin"
+          }
+        }
+      },
+      "get": {
+        "tags": [
+          "Authenticated routes"
+        ],
+        "summary": "List all tags",
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ],
+        "parameters": [
+          {
+            "name": "name",
+            "in": "query",
+            "description": "Name of tag",
+            "schema": {
+              "type": "string"
+            },
+            "required": false
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Success",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "properties": {
+                    "tags": {
+                      "type": "array",
+                      "items": {
+                        "$ref": "#/components/schemas/Tag"
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/compliments": {
+      "post": {
+        "tags": [
+          "Authenticated routes"
+        ],
+        "summary": "Create a new compliment for some user",
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/CreateCompliment"
+              }
+            }
+          }
+        },
+        "responses": {
+          "201": {
+            "description": "Created",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Compliment"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Bad Request"
+          },
+          "404": {
+            "description": "User not found"
+          }
+        }
+      }
+    },
+    "/compliments/{user_id}": {
+      "get": {
+        "tags": [
+          "Authenticated routes"
+        ],
+        "description": "List all of a user's compliments. To filter between sent or received use 'sent' or 'received' in query params",
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ],
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "description": "id of user",
+            "schema": {
+              "type": "string"
+            },
+            "required": true
+          },
+          {
+            "name": "type",
+            "in": "query",
+            "description": "Type of compliment - sent ou received",
+            "schema": {
+              "type": "string",
+              "default": "sent"
+            },
+            "required": false
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Success",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "properties": {
+                    "compliments": {
+                      "type": "array",
+                      "items": {
+                        "$ref": "#/components/schemas/ComplimentDetail"
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "User not found"
+          }
+        }
+      }
+    }
+  }
+}
