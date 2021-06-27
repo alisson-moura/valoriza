@@ -17,6 +17,7 @@ app.use((err: Error, request: Request, response: Response, next: NextFunction) =
   if (err instanceof ErrorProvider) {
     return response.status(err.statusCode).json({ error: err.message })
   }
+  console.log(err)
   return response.status(500).json({ error: 'Internal Server Error.' })
 })
 
