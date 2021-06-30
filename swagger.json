@@ -482,6 +482,7 @@
         "tags": [
           "Authenticated routes"
         ],
+        "summary": "List all of a user's compliments.",
         "description": "List all of a user's compliments. To filter between sent or received use 'sent' or 'received' in query params",
         "security": [
           {
