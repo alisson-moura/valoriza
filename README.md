@@ -67,7 +67,7 @@ npm run test
 
 ### Acessando a documentação
 A documentação da aplicação foi feita usando Swagger e contém os dados necessários para usar corretamente os endpoints, para visualizar a documentação basta acessar no seu navegador: http://localhost:3000/.
-Também é possível realizar testes através 
+Também é possível realizar testes através [![Run in Insomnia}](https://insomnia.rest/images/run.svg)](https://insomnia.rest/run/?label=valoriza-api&uri=https%3A%2F%2Fraw.githubusercontent.com%2Falisson-moura%2Fvaloriza-api%2Fmaster%2FInsomnia_2021-07-01)
 
 ### Tecnologias utilizadas
 As seguintes ferramentas foram usadas na construção do projeto:
