@@ -1,0 +1,12 @@
+
+version: "3"
+services:
+  valoriza_db:
+    image: postgres
+    container_name: "postgres"
+    environment:
+      - POSTGRES_DB=valoriza
+      - POSTGRES_USER=postgres
+      - POSTGRES_PASSWORD=123456
+    ports:
+      - 5432:5432
