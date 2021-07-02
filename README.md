@@ -32,6 +32,7 @@ Também será necessário a conexão com um banco de dados PostgreSQL. É necess
 $ docker-compose up -d
 ```
 Ou pode criar uma base de dados manualmente em um banco de dados PostgreSQL. De qualquer forma é necessário informar os dados de conexão no arquivo ".env".
+A API também tem a funcionalidade de enviar um e-mail de boas vindas para usuários novos na plataforma e quando um usuário recebe um elogio ele é notificado por e-mail também, para essa funcionalidade funcionar corretamente é necessário preencher o arquivo ".env" com os dados do seu serviço de e-mail.
 ### Clonando o repositório
 
 ```bash
